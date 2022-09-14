@@ -1,6 +1,6 @@
 .widgets-body {
   width: 95%;
-  height: 50%;
+  height: auto;
   margin: 2% auto 3%;
   background: rgb(30, 42, 62);
   border-radius: 30px;
