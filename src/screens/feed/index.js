@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
+import "../player/player.css";
 import { Buffer } from "buffer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container,InputGroup,FormControl,Button,Row,Card } from "react-bootstrap";
 
-const clientId = "d83e88b3c6a3466db43c0d90323616b2";
-const clientSecret = "38732f8c526a479e9cbec71e7eff2b3f";
+const clientId = process.env.REACT_APP_CLIENT_ID;
+const clientSecret = process.env.REACT_APP_CLIENT_SECRET;
 
 export default function Library() {
   const [searchInput, setSearchInput]= useState("")
   const [accessToken,setAccessToken]=useState("")
   const [albums,setAlbums]= useState([])
+  const [albumID,setAlbumID]=useState("")
 
   useEffect(() => {
     console.log(clientId)
@@ -70,18 +72,20 @@ async function search(){
 
 
         </InputGroup>
+        <iframe style={{borderRadius:"12px"}} src={`https://open.spotify.com/embed/album/${albumID}?utm_source=generator`} width="100%" height="200" frameBorder="0" allowFullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </Container>
       <Container>
       <Row className="mx-2 row row-cols-4">
       {albums.map((album,i)=>{
         return(
-          <Card>
-          <Card.Img src={album.images[0].url}/>
+          <div >
+          <Card >
+          <Card.Img src={album.images[0].url} onClick={() => setAlbumID(album.id)}/>
           <Card.Body>
           <Card.Title>{album.name} </Card.Title>
           </Card.Body>
-          <iframe style={{borderRadius:"12px"}} src="https://open.spotify.com/embed/album/0tCOMESQmYFABNuADuXK2l?utm_source=generator" width="100%" height="200" frameBorder="0" allowFullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </Card>
+          </div>
           )
           })
         }
